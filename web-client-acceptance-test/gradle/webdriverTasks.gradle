@@ -1,0 +1,37 @@
+/**
+ * Inspired by https://github.com/geb/geb-example-cucumber-jvm/blob/master/gradle/osSpecificDownloads.gradle
+ */
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task downloadChromeDriver {
+    group = 'WebDriver'
+    inputs.property('chromeDriverVersion', chromeDriverVer)
+    def outputFile = file "$buildDir/webdriver/chromedriver.zip"
+    outputs.file outputFile
+
+    doLast {
+        def driverOsFilenamePart
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            driverOsFilenamePart = 'win32'
+        } else if (Os.isFamily(Os.FAMILY_MAC)) {
+            driverOsFilenamePart = 'mac32'
+        } else if (Os.isFamily(Os.FAMILY_UNIX)) {
+            driverOsFilenamePart = Os.isArch('amd64') ? 'linux64' : 'linux32'
+        }
+        def sourceUrl = "http://chromedriver.storage.googleapis.com/${chromeDriverVer}/chromedriver_${driverOsFilenamePart}.zip"
+        download {
+            src sourceUrl
+            dest outputFile
+        }
+    }
+}
+
+task unzipChromeDriver(type: Copy) {
+    group = 'WebDriver'
+    def outputDir = file "$buildDir/webdriver"
+    dependsOn downloadChromeDriver
+    outputs.dir outputDir
+
+    from zipTree(downloadChromeDriver.outputs.files.singleFile)
+    into outputDir
+}

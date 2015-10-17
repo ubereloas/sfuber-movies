@@ -1,0 +1,19 @@
+{
+  "name": "sfuber-webclient",
+  "version": "1.0.0",
+  "description": "Web client for the SFuber service",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "http-server": "0.8.5"
+  },
+  "devDependencies": {
+    "opener": "1.4.1"
+  },
+  "scripts": {
+    "open:dev": "opener http://localhost:9090",
+    "serve": "http-server -p 9090 src/",
+    "dev": "npm run open:dev && npm run serve"
+  }
+}

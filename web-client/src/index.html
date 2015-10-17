@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SFuber Movies</title>
+</head>
+<body>
+</body>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+    (function() {
+        var serviceUrl = 'http://localhost:5000';
+
+        $.get(serviceUrl + '/awesome-message', function (data) {
+            $('body').append(data.message);
+        })
+    })();
+</script>
+</html>

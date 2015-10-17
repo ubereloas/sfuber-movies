@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'net.serenity-bdd:serenity-gradle-plugin:1.1.14'
+    }
+}
+
+plugins {
+    id 'de.undercouch.download' version '2.0.0'
+}
+
+ext {
+    chromeDriverVer = '2.20'
+}
+
+apply plugin: 'groovy'
+apply plugin: 'net.serenity-bdd.aggregator'
+apply from: 'gradle/webdriverTasks.gradle'
+
+group 'com.sfubermovies.acceptance-test'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    compile 'info.cukes:cucumber-groovy:1.2.4'
+    compile 'junit:junit:4.12'
+    compile 'net.serenity-bdd:serenity-core:1.1.14'
+    compile 'net.serenity-bdd:serenity-cucumber:1.1.1'
+    compile 'org.gebish:geb-core:0.12.2'
+    compile 'org.slf4j:slf4j-simple:1.7.12'
+    compile 'com.outr.javasysmon:javasysmon_2.10:0.3.4'
+}
+
+task runAcceptanceTests(type: Test) {
+    dependsOn unzipChromeDriver
+    finalizedBy aggregate
+    outputs.upToDateWhen { false }
+    testClassesDir = sourceSets.main.output.classesDir
+}
