@@ -4,16 +4,38 @@
     <meta charset="utf-8">
     <title>SFuber Movies</title>
 </head>
-<body>
+<body ng-app="sfuber-movies">
+<awesome-message></awesome-message>
 </body>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script>
-    (function() {
-        var serviceUrl = 'http://localhost:5000';
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script type="text/javascript">
+    (function () {
+        angular.module('sfuber-movies', [])
+                .service('AwesomeMessageService', function ($http, $q) {
+                    var serviceUrl = 'http://localhost:5000';
 
-        $.get(serviceUrl + '/awesome-message', function (data) {
-            $('body').append(data.message);
-        })
+                    this.getMsg = function () {
+                        var deferred = $q.defer();
+                        $http.get(serviceUrl + '/awesome-message').then(function (resp) {
+                            deferred.resolve(resp.data.message);
+                        });
+                        return deferred.promise;
+                    }
+                })
+                .directive('awesomeMessage', function () {
+                    return {
+                        restrict: 'E',
+                        template: '{{vm.msg}}',
+                        controllerAs: 'vm',
+                        controller: function (AwesomeMessageService) {
+                            var vm = this;
+                            AwesomeMessageService.getMsg().then(function (msg) {
+                                vm.msg = msg;
+                            });
+                        }
+                    }
+                });
     })();
 </script>
 </html>

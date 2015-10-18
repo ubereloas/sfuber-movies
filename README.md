@@ -16,13 +16,15 @@ SFuber Movies
 The following table summarizes the technologies and tools used in the project, their roles as well as my experience with them.
 
 ### Web client
-Technology | Role                    | Experience
------------------|-------------------------|:---------------------:
-JavaScript | Implementation language | ![Master][master]
-[npm][npm] | Build automation        | ![Beginner][beginner]
-HTML       | Presentation/layout     | ![Master][master]
+Technology            | Role                    | Experience
+----------------------|-------------------------|:---------------------:
+JavaScript            | Implementation language | ![Master][master]
+[npm][npm]            | Build automation        | ![Beginner][beginner]
+HTML                  | Presentation/layout     | ![Master][master]
+[AngularJS][angular]  | SPA web framework       | ![Master][master]
 
 [npm]: https://www.npmjs.com
+[angular]: https://angularjs.org
 
 ### Service
 Technology       | Role                       | Experience
