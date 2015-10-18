@@ -2,18 +2,30 @@
   "name": "sfuber-webclient",
   "version": "1.0.0",
   "description": "Web client for the SFuber service",
-  "main": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "angular": "1.4.7",
+
     "http-server": "0.8.5"
   },
   "devDependencies": {
+    "browserify": "11.2.0",
+    "copyfiles": "0.2.1",
+    "rimraf": "2.4.3",
     "opener": "1.4.1"
   },
   "scripts": {
+    "clean": "rimraf dist",
+
+    "prebuild": "npm run clean",
+    "build": "npm run build:html && npm run build:js",
+    "build:html": "copyup src/*.html dist",
+    "build:js": "browserify src/main.js -o dist/bundle.js",
+
     "open:dev": "opener http://localhost:9090",
-    "serve": "http-server -p 9090 src/",
-    "dev": "npm run open:dev && npm run serve"
+    "serve": "http-server -p 9090 dist/",
+
+    "dev": "npm run build && npm run open:dev && npm run serve"
   }
 }
