@@ -6,14 +6,31 @@
   "private": true,
   "dependencies": {
     "angular": "1.4.7",
+    "angular-google-maps": "2.2.1",
+    "lodash": "3.10.1",
 
     "http-server": "0.8.5"
   },
   "devDependencies": {
     "browserify": "11.2.0",
+    "browserify-shim": "3.8.10",
     "copyfiles": "0.2.1",
     "rimraf": "2.4.3",
-    "opener": "1.4.1"
+    "opener": "1.4.1",
+    "parallelshell": "2.0.0",
+    "watchify": "3.4.0"
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "browser": {
+    "angular-google-maps": "./node_modules/angular-google-maps/dist/angular-google-maps.js",
+    "lodash": "./node_modules/lodash/index.js"
+  },
+  "browserify-shim": {
+    "angular-google-maps": {
+      "depends": ["./node_modules/angular-simple-logger/dist/angular-simple-logger.js", "lodash:_"]
+    }
   },
   "scripts": {
     "clean": "rimraf dist",
@@ -22,10 +39,11 @@
     "build": "npm run build:html && npm run build:js",
     "build:html": "copyup src/*.html dist",
     "build:js": "browserify src/main.js -o dist/bundle.js",
+    "watch": "watchify src/main.js -o dist/bundle.js -v",
 
     "open:dev": "opener http://localhost:9090",
     "serve": "http-server -p 9090 dist/",
 
-    "dev": "npm run build && npm run open:dev && npm run serve"
+    "dev": "npm run build && npm run open:dev && parallelshell \"npm run serve\" \"npm run watch\""
   }
 }

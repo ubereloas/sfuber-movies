@@ -4,7 +4,7 @@ class ServiceProcess {
     private Process process
 
     void start() {
-        process = Runtime.runtime.exec("python service.py -port 5100", null, new File('C:\\Users\\Admin\\Desktop\\sfuber-movies\\service'))
+        process = Runtime.runtime.exec("python service.py", null, new File('C:\\Users\\Admin\\Desktop\\sfuber-movies\\service\\app\\api'))
     }
 
     void stop() {

@@ -1,6 +1,7 @@
 package com.sfubermovies.webclient.test.acceptance.env
 
 import cucumber.api.java.Before
+import net.serenitybdd.core.Serenity
 import net.thucydides.core.annotations.Managed
 import org.openqa.selenium.WebDriver
 
@@ -28,6 +29,8 @@ class CucumberHooks {
     private void beforeAll() {
         serviceProcess.start()
         webClientProcess.start()
+
+        Serenity.currentSession.put('serviceUrl', 'http://localhost:5000')
     }
 
     private void afterAll() {
