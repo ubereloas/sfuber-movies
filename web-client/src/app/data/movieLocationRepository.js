@@ -1,4 +1,4 @@
-angular.module('sfuber-movies').service('movieLocationsRepository', function ($http, $q) {
+angular.module('sfuber-movies').service('movieLocationRepository', function ($http, $q) {
     var endpoint = 'http://localhost:5000/movie-locations';
 
     this.getAll = function () {

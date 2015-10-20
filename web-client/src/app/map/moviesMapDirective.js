@@ -8,7 +8,7 @@ angular.module('sfuber-movies').directive('moviesMap', function () {
             '</ui-gmap-google-map>'
         ].join(''),
         controllerAs: 'vm',
-        controller: function (movieLocationsRepository, markerFactory) {
+        controller: function (movieLocationRepository, markerFactory) {
             var vm = this;
             vm.map = {
                 center: {latitude: 37.7, longitude: -122.45}, // Fog City
@@ -16,7 +16,7 @@ angular.module('sfuber-movies').directive('moviesMap', function () {
             };
             vm.markers = [];
 
-            movieLocationsRepository.getAll().then(onMovieLocationsReceived);
+            movieLocationRepository.getAll().then(onMovieLocationsReceived);
             function onMovieLocationsReceived(locations) {
                 for (var i = 0; i < locations.length; i++) {
                     vm.markers.push(markerFactory.forMovieLocation(locations[i]));
