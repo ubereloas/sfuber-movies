@@ -7,6 +7,7 @@
   "dependencies": {
     "angular": "1.4.7",
     "angular-google-maps": "2.2.1",
+    "jquery": "2.1.4",
     "lodash": "3.10.1",
 
     "http-server": "0.8.5"
@@ -30,10 +31,14 @@
     "transform": [ "browserify-shim" ]
   },
   "browser": {
+    "angular": "./node_modules/angular/angular.js",
     "angular-google-maps": "./node_modules/angular-google-maps/dist/angular-google-maps.js",
     "lodash": "./node_modules/lodash/index.js"
   },
   "browserify-shim": {
+    "angular": {
+      "depends": ["jquery:jQuery"]
+    },
     "angular-google-maps": {
       "depends": ["./node_modules/angular-simple-logger/dist/angular-simple-logger.js", "lodash:_"]
     }
@@ -43,14 +48,14 @@
 
     "prebuild": "npm run clean",
     "build": "npm run build:html && npm run build:js",
-    "build:html": "copyfiles -u 2 src/app/*.html dist",
+    "build:html": "copyfiles -u 2 src/app/**/*.html dist",
     "build:js": "browserify src/app/main.js -o dist/bundle.js",
     "watch": "watchify src/app/main.js -o dist/bundle.js -v",
 
     "karma": "karma start",
 
     "open:dev": "opener http://localhost:9090",
-    "serve": "http-server -p 9090 dist/",
+    "serve": "http-server -p 9090 -c-1 dist/",
 
     "dev": "npm run build && npm run open:dev && parallelshell \"npm run serve\" \"npm run watch\""
   }

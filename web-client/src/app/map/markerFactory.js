@@ -6,11 +6,15 @@ angular.module('sfuber-movies').service('markerFactory', function () {
             id: nextId++,
             options: {label: makeLabel(location)},
             latitude: location.coordinates.latitude,
-            longitude: location.coordinates.longitude
+            longitude: location.coordinates.longitude,
+            data: {
+                name: location.name,
+                movies: location.movies
+            }
         }
     };
 
     function makeLabel(location) {
-        return location.movie_count >= 10 ? '+' : location.movie_count.toString();
+        return location.movies.length >= 10 ? '+' : location.movies.length.toString();
     }
 });
