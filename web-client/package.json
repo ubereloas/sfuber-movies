@@ -12,9 +12,15 @@
     "http-server": "0.8.5"
   },
   "devDependencies": {
+    "angular-mocks": "1.4.7",
     "browserify": "11.2.0",
     "browserify-shim": "3.8.10",
     "copyfiles": "0.2.1",
+    "karma": "0.13.11",
+    "karma-browserify": "4.4.0",
+    "karma-cli": "0.1.1",
+    "karma-jasmine": "0.3.6",
+    "karma-phantomjs-launcher": "0.2.1",
     "rimraf": "2.4.3",
     "opener": "1.4.1",
     "parallelshell": "2.0.0",
@@ -37,9 +43,11 @@
 
     "prebuild": "npm run clean",
     "build": "npm run build:html && npm run build:js",
-    "build:html": "copyup src/*.html dist",
-    "build:js": "browserify src/main.js -o dist/bundle.js",
-    "watch": "watchify src/main.js -o dist/bundle.js -v",
+    "build:html": "copyfiles -u 2 src/app/*.html dist",
+    "build:js": "browserify src/app/main.js -o dist/bundle.js",
+    "watch": "watchify src/app/main.js -o dist/bundle.js -v",
+
+    "karma": "karma start",
 
     "open:dev": "opener http://localhost:9090",
     "serve": "http-server -p 9090 dist/",

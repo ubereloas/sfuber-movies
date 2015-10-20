@@ -23,8 +23,11 @@ def movie_locations():
             key = str(round(coords['lat'], 5)) + ":" + str(round(coords['lng'], 5))
             if key not in locs:
                 locs[key] = {
-                    "coordinates": {"latitude": coords['lat'], "longitude": coords['lng']}
+                    "coordinates": {"latitude": coords['lat'], "longitude": coords['lng']},
+                    "movie_count": 1
                 }
+            else:
+                locs[key]['movie_count'] += 1
 
     return jsonify({
         "data": list(locs.values())
