@@ -11,9 +11,9 @@ class MapPage extends Page {
         currentLocationDetails { module LocationDetailsModule }
     }
 
-    def assertHasAtLeastMarkerCount(int count) {
+    def assertHasMarkerCount(int count) {
         waitFor {
-            markers.size() >= count
+            markers.size() == count
         }
     }
 

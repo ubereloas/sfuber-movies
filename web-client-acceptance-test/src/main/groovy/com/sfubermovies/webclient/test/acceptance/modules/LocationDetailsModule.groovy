@@ -5,14 +5,14 @@ import geb.Module
 class LocationDetailsModule  extends Module {
     static base = { $('.location-details') }
     static content = {
-        name { $('.name') }
+        name { $('.location-name') }
         movieList { $('.movie-list') }
     }
 
     def assertContains(Map data) {
         assert name.text() == data.name
-        data.movies.each { name ->
-            assert movieList.text().contains(name)
+        data.movies.each { movie ->
+            assert movieList.text().contains("$movie.title ($movie.year)")
         }
     }
 }

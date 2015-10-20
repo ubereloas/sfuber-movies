@@ -7,15 +7,15 @@ from os import path
 app = Flask(__name__)
 CORS(app)
 
-movie_locations = []
+movie_locs = []
 
 
 @app.route('/movie-locations')
 def movie_locations():
-    global movie_locations
-    if movie_locations:
+    global movie_locs
+    if movie_locs:
         return jsonify({
-            "data": movie_locations
+            "data": movie_locs
         })
 
     with open(path.join(path.dirname(__file__), '../../data/datasf_movies_10_18_2015_geocoded.json')) as file:
@@ -33,10 +33,16 @@ def movie_locations():
                 locs[key] = {
                     "name": location['map_location']['name'],
                     "coordinates": {"latitude": coords['lat'], "longitude": coords['lng']},
-                    "movies": [movie['title']]
+                    "movies": [{
+                        "title": movie['title'],
+                        "year": movie['year']
+                    }]
                 }
             else:
-                locs[key]['movies'].append(movie['title'])
+                locs[key]['movies'].append({
+                    "title": movie['title'],
+                    "year": movie['year']
+                })
 
     return jsonify({
         "data": list(locs.values())
@@ -45,8 +51,8 @@ def movie_locations():
 
 @app.route('/set-movie-locations', methods=['POST'])
 def set_movie_locations():
-    global movie_locations
-    movie_locations = request.get_json()
+    global movie_locs
+    movie_locs = request.get_json()
     return Response(status=200)
 
 
