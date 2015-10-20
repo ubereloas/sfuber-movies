@@ -6,7 +6,7 @@ angular.module('sfuber-movies').directive('locationDetails', function () {
         },
         template: [
             '<div class="location-details">',
-            '  <div class="name">{{vm.details.name}}</div>',
+            '  <div class="location-name">{{vm.details.name}}</div>',
             '  <div class="movie-list">',
             '    <div ng-repeat="movie in vm.details.movies">{{movie}}</div>',
             '  </div>',
