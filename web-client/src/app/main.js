@@ -5,3 +5,4 @@ require('./map/markerFactory');
 require('./map/moviesMapDirective');
 require('./map/locationDetailsDirective');
 require('./data/movieLocationRepository');
+require('./data/locationDetailsRepository');

@@ -31,9 +31,11 @@ Technology       | Role                       | Experience
 -----------------|----------------------------|:---------------------:
 [Python][python] | Implementation language    | ![None][none]
 [Flask][flask]   | Web framework              | ![None][none]
+[MongoDB][mongo] | Database                   | ![None][none]
 
 [python]: https://www.python.org
 [flask]: http://flask.pocoo.org
+[mongo]: https://www.mongodb.org
 
 ### Acceptance test
 Technology           | Role                    | Experience

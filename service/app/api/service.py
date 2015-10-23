@@ -1,59 +1,52 @@
-import json
-from flask import Flask, request, Response
+import argparse
+from bson import json_util, ObjectId
+from flask import Flask, Response
 from flask.ext.cors import CORS
-from flask import jsonify
-from os import path
+from pymongo import MongoClient
+
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('--db', required=True, dest='db_name')
+args = arg_parser.parse_args()
+db_name = args.db_name
 
 app = Flask(__name__)
 CORS(app)
 
-movie_locs = []
-
 
 @app.route('/movie-locations')
 def movie_locations():
-    global movie_locs
-    if movie_locs:
-        return jsonify({
-            "data": movie_locs
-        })
-
-    with open(path.join(path.dirname(__file__), '../../data/datasf_movies_10_18_2015_geocoded.json')) as file:
-        movies = json.load(file)
-
-    locs = {}
-    for movie in movies:
-        for location in movie['locations']:
-            coords = location['map_location']['coords']
-            if not coords:
-                continue
-
-            key = str(round(coords['lat'], 5)) + ":" + str(round(coords['lng'], 5))
-            if key not in locs:
-                locs[key] = {
-                    "name": location['map_location']['name'],
-                    "coordinates": {"latitude": coords['lat'], "longitude": coords['lng']},
-                    "movies": [{
-                        "title": movie['title'],
-                        "year": movie['year']
-                    }]
-                }
-            else:
-                locs[key]['movies'].append({
-                    "title": movie['title'],
-                    "year": movie['year']
-                })
-
-    return jsonify({
-        "data": list(locs.values())
-    })
+    db = MongoClient()[db_name]
+    locations = db.locations.aggregate([{
+        '$project': {
+            'coordinates': True,
+            'movie_count': {'$size': '$movie_ids'}
+        }
+    }])
+    return Response(
+        json_util.dumps({
+            'movie_locations': locations
+        }),
+        mimetype='application/json'
+    )
 
 
-@app.route('/set-movie-locations', methods=['POST'])
-def set_movie_locations():
-    global movie_locs
-    movie_locs = request.get_json()
-    return Response(status=200)
+@app.route('/movie-locations/<id>/details')
+def movie_location_details(id):
+    db = MongoClient()[db_name]
+    location_details = db.locations.find_one({'_id': ObjectId(id)}, {'coordinates': False})
+    movies = db.movies.aggregate([
+        {'$match': {'_id': {'$in': location_details['movie_ids']}}},
+        {'$project': {'title': True, 'year': True}}
+    ])
+    return Response(
+        json_util.dumps({
+            'location_details': {
+                'name': location_details['name'],
+                'movies': list(movies)
+            }
+        }),
+        mimetype='application/json'
+    )
 
 
 if __name__ == '__main__':

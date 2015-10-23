@@ -8,13 +8,13 @@ angular.module('sfuber-movies').service('markerFactory', function () {
             latitude: location.coordinates.latitude,
             longitude: location.coordinates.longitude,
             data: {
-                name: location.name,
-                movies: location.movies
+                _id: location._id,
+                movie_count: location.movie_count
             }
         }
     };
 
     function makeLabel(location) {
-        return location.movies.length >= 10 ? '+' : location.movies.length.toString();
+        return location.movie_count >= 10 ? '+' : location.movie_count.toString();
     }
 });

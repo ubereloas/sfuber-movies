@@ -1,5 +1,6 @@
 package com.sfubermovies.webclient.test.acceptance.env
 
+import com.sfubermovies.webclient.test.acceptance.service.Service
 import cucumber.api.java.Before
 import net.serenitybdd.core.Serenity
 import net.thucydides.core.annotations.Managed
@@ -18,12 +19,14 @@ class CucumberHooks {
      * WebDriver instance when that is run.
      */
     @Before(order = 0)
-    void before() {
+    void beforeHook() {
         if (!beforeAllHasBeenCalled) {
             beforeAll()
             addShutdownHook { afterAll() }
             beforeAllHasBeenCalled = true
         }
+
+        Service.resetDb()
     }
 
     private void beforeAll() {

@@ -11,15 +11,19 @@ describe('movieLocationRepository', function () {
 
     describe('#getAll', function () {
         it('retrieves a list of movies from the service and returns them in a promise', function () {
-            $httpBackend.expectGET('http://localhost:5000/movie-locations').respond({data: [{
-                fake: 'movie'
+            $httpBackend.expectGET('http://localhost:5000/movie-locations').respond({movie_locations: [{
+                coordinates: {latitude: 1, longitude: 2},
+                movie_count: 3
             }]});
 
-            var handler = jasmine.createSpy('onGetAllSuccess');
+            var handler = jasmine.createSpy('onSuccess');
             repo.getAll().then(handler);
             $httpBackend.flush();
 
-            expect(handler).toHaveBeenCalledWith([{fake: 'movie'}]);
+            expect(handler).toHaveBeenCalledWith([{
+                coordinates: {latitude: 1, longitude: 2},
+                movie_count: 3
+            }]);
         });
     });
 });

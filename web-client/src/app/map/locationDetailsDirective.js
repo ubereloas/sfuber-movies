@@ -2,7 +2,7 @@ angular.module('sfuber-movies').directive('locationDetails', function () {
     return {
         restrict: 'E',
         scope: {
-            details: '='
+            location: '='
         },
         template: [
             '<div class="location-details">',
@@ -16,7 +16,12 @@ angular.module('sfuber-movies').directive('locationDetails', function () {
         ].join(''),
         controllerAs: 'vm',
         bindToController: true,
-        controller: function () {
+        controller: function (locationDetailsRepository) {
+            var vm = this;
+
+            locationDetailsRepository.forLocation(vm.location).then(function(details) {
+                vm.details = details;
+            })
         }
     }
 });

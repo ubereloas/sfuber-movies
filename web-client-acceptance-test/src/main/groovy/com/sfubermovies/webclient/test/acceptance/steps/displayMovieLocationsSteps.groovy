@@ -6,22 +6,20 @@ import com.sfubermovies.webclient.test.acceptance.service.Service
 import static cucumber.api.groovy.EN.*
 
 Given(~'there are some movies in the system filmed at distinct locations') { ->
-    Service.setLocations([
-            [
-                  name: 'Loc 1',
-                  coordinates: [latitude: 37.68, longitude: -122.45],
-                  movies: [[title: 'Movie1', year: 2010]]
-            ],
-            [
-                  name: 'Loc 2',
-                  coordinates: [latitude: 37.70, longitude: -122.43],
-                  movies: [[title: 'Movie2', year: 2011]]
-            ],
-            [
-                  name: 'Loc 3',
-                  coordinates: [latitude: 37.72, longitude: -122.49],
-                  movies: [[title: 'Movie3', year: 2012]]
-            ]
+    Service.addLocation([
+            name: 'Loc 1',
+            coordinates: [latitude: 37.68f, longitude: -122.45f],
+            movie_ids: ['FakeID1']
+    ])
+    Service.addLocation([
+            name: 'Loc 2',
+            coordinates: [latitude: 37.70f, longitude: -122.43f],
+            movie_ids: ['FakeID2']
+    ])
+    Service.addLocation([
+            name: 'Loc 3',
+            coordinates: [latitude: 37.72f, longitude: -122.49f],
+            movie_ids: ['FakeID3']
     ])
 }
 

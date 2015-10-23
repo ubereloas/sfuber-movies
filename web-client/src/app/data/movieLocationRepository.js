@@ -3,11 +3,9 @@ angular.module('sfuber-movies').service('movieLocationRepository', function ($ht
 
     this.getAll = function () {
         var deferred = $q.defer();
-
         $http.get(endpoint).then(function (resp) {
-            deferred.resolve(resp.data.data);
+            deferred.resolve(resp.data.movie_locations);
         });
-
         return deferred.promise;
     }
 });
