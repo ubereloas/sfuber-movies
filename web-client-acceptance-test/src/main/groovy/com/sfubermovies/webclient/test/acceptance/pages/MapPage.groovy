@@ -1,5 +1,6 @@
 package com.sfubermovies.webclient.test.acceptance.pages
 
+import com.sfubermovies.webclient.test.acceptance.modules.FilterModule
 import com.sfubermovies.webclient.test.acceptance.modules.LocationDetailsModule
 import geb.Page
 
@@ -7,6 +8,7 @@ class MapPage extends Page {
     static url = 'http://localhost:9090'
     static at = { $('.angular-google-map-container').displayed }
     static content = {
+        filter { module FilterModule }
         markers(wait: true) { $('.gmnoprint area') }
         cluster(wait: true) { locationCount -> $('.cluster', text: locationCount as String) }
         currentLocationDetails { module LocationDetailsModule }

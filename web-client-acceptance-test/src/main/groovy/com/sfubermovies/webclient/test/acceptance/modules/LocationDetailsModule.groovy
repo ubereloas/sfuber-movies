@@ -9,7 +9,7 @@ class LocationDetailsModule extends Module {
         movieList { $('.movie-list') }
     }
 
-    def assertContains(Map data) {
+    void assertContains(Map data) {
         waitFor { name.text() == data.name }
         data.movies.each { movie ->
             assert movieList.text().contains("$movie.title ($movie.year)")

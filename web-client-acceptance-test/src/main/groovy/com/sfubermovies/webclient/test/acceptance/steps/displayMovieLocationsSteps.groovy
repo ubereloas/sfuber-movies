@@ -42,10 +42,6 @@ Given(~'there are some movies in the system filmed at distinct locations close t
     ])
 }
 
-When(~'I go to the locations page') { ->
-    to MapPage
-}
-
 And(~'I open the corresponding cluster') { ->
     MapPage page = at MapPage
     page.openClusterWithCount(3)
