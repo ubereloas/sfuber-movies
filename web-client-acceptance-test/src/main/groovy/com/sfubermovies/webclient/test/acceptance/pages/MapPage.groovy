@@ -8,7 +8,16 @@ class MapPage extends Page {
     static at = { $('.angular-google-map-container').displayed }
     static content = {
         markers(wait: true) { $('.gmnoprint area') }
+        cluster(wait: true) { locationCount -> $('.cluster', text: locationCount as String) }
         currentLocationDetails { module LocationDetailsModule }
+    }
+
+    def openLocationDetails(int index) {
+        markers[index].click()
+    }
+
+    def openClusterWithCount(count) {
+        cluster(count).click()
     }
 
     def assertHasMarkerCount(int count) {
@@ -17,7 +26,9 @@ class MapPage extends Page {
         }
     }
 
-    def openLocationDetails(int index) {
-        markers[index].click()
+    def assertHasClusterWithCount(int count) {
+        waitFor {
+            cluster(count)
+        }
     }
 }
