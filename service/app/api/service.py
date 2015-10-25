@@ -1,6 +1,6 @@
 import argparse
 from bson import json_util, ObjectId
-from flask import Flask, Response
+from flask import Flask, Response, request
 from flask.ext.cors import CORS
 from pymongo import MongoClient
 
@@ -16,12 +16,7 @@ CORS(app)
 @app.route('/movie-locations')
 def movie_locations():
     db = MongoClient()[db_name]
-    locations = db.locations.aggregate([{
-        '$project': {
-            'coordinates': True,
-            'movie_count': {'$size': '$movie_ids'}
-        }
-    }])
+    locations = db.locations.find({}, {'coordinates': True, 'movie_ids': True})
     return Response(
         json_util.dumps({
             'movie_locations': locations
@@ -44,6 +39,24 @@ def movie_location_details(id):
                 'name': location_details['name'],
                 'movies': list(movies)
             }
+        }),
+        mimetype='application/json'
+    )
+
+
+@app.route('/movies')
+def movies():
+    title_filter = request.args.get('titleFilter')
+
+    db = MongoClient()[db_name]
+    movies = db.movies.find(
+        {'title': {'$regex': title_filter}},
+        {'title': True, 'year': True}
+    ).limit(10)
+
+    return Response(
+        json_util.dumps({
+            'movies': list(movies)
         }),
         mimetype='application/json'
     )

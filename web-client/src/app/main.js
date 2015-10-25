@@ -1,8 +1,12 @@
 require('angular');
 require('angular-google-maps');
+require('angucomplete-alt');
 require('./app');
-require('./map/markerFactory');
+require('./map/marker/markerFactory');
+require('./map/marker/markerManager');
 require('./map/moviesMapDirective');
 require('./map/locationDetailsDirective');
+require('./map/filter/filterControlDirective');
 require('./data/movieLocationRepository');
 require('./data/locationDetailsRepository');
+require('./data/movieRepository');

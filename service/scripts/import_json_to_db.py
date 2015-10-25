@@ -1,4 +1,4 @@
-from copy import copy, deepcopy
+from copy import deepcopy
 import json
 from os import path
 from pymongo import MongoClient

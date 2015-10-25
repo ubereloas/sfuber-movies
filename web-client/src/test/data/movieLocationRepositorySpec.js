@@ -10,7 +10,7 @@ describe('movieLocationRepository', function () {
     }));
 
     describe('#getAll', function () {
-        it('retrieves a list of movies from the service and returns them in a promise', function () {
+        it('retrieves a list of movie locations from the service and returns them in a promise', function () {
             $httpBackend.expectGET('http://localhost:5000/movie-locations').respond({movie_locations: [{
                 coordinates: {latitude: 1, longitude: 2},
                 movie_count: 3

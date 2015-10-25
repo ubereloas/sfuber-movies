@@ -9,12 +9,12 @@ angular.module('sfuber-movies').service('markerFactory', function () {
             longitude: location.coordinates.longitude,
             data: {
                 _id: location._id,
-                movie_count: location.movie_count
+                movie_ids: location.movie_ids
             }
         }
     };
 
     function makeLabel(location) {
-        return location.movie_count >= 10 ? '+' : location.movie_count.toString();
+        return location.movie_ids.length >= 10 ? '+' : location.movie_ids.length.toString();
     }
 });
