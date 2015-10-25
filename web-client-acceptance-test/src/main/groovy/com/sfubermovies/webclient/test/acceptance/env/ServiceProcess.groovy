@@ -4,7 +4,8 @@ class ServiceProcess {
     private Process process
 
     void start() {
-        process = Runtime.runtime.exec("python service.py --db sfubermovies-test", null, new File('C:\\Users\\Admin\\Desktop\\sfuber-movies\\service\\app\\api'))
+        def rootDir = System.getenv('SFUBERMOVIES_ROOT_DIR')
+        process = Runtime.runtime.exec("python service.py --db sfubermovies-test", null, new File("$rootDir/service/app/api"))
     }
 
     void stop() {

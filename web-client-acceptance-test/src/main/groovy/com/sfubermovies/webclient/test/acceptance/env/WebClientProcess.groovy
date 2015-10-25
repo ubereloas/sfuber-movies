@@ -22,8 +22,9 @@ class WebClientProcess {
     }
 
     private Process execNpmTask(String taskName) {
+        def rootDir = System.getenv('SFUBERMOVIES_ROOT_DIR')
         def args = ['C:\\Program Files\\nodejs\\npm.cmd', 'run', taskName] as String[]
-        Process p = Runtime.runtime.exec(args, null, new File('C:\\Users\\Admin\\Desktop\\sfuber-movies\\web-client'))
+        Process p = Runtime.runtime.exec(args, null, new File("$rootDir/web-client"))
         startOutputGobbler(p) // Needed to avoid blocking when buffer is full
         return p;
     }

@@ -43,5 +43,7 @@ task runAcceptanceTests(type: Test) {
     dependsOn unzipChromeDriver
     finalizedBy aggregate
     outputs.upToDateWhen { false }
+
+    environment('SFUBERMOVIES_ROOT_DIR', "$projectDir/..")
     testClassesDir = sourceSets.main.output.classesDir
 }
