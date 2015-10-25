@@ -24,6 +24,14 @@ describe('markerManager', function () {
         });
     });
 
+    it('has clustering activated by default', function () {
+        expect(manager.clusterType).toEqual('cluster');
+    });
+
+    it('uses a minimum cluster size of 3', function () {
+        expect(manager.clusterOptions.minimumClusterSize).toBe(3);
+    });
+
     describe('when $rootScope event FILTER_ADDED is fired', function () {
         it('removes all markers not matching the filter', function () {
             manager.markers.push(
@@ -34,6 +42,17 @@ describe('markerManager', function () {
             $rootScope.$emit('FILTER_ADDED', {_id: {$oid: 'MovieId3'}});
 
             expect(manager.markers).toEqual([{data: {movie_ids: [{$oid: 'MovieId3'}, {$oid: 'MovieId4'}]}}]);
+        });
+
+        it('deactivates clustering', function () {
+            manager.markers.push(
+                {data: {movie_ids: [{$oid: 'MovieId1'}]}}
+            );
+
+            manager.clusterType = 'cluster';
+            $rootScope.$emit('FILTER_ADDED', {_id: {$oid: 'MovieId1'}});
+
+            expect(manager.clusterType).toBeNull();
         });
     });
 
@@ -51,6 +70,17 @@ describe('markerManager', function () {
                 {data: {movie_ids: [{$oid: 'MovieId1'}]}},
                 {data: {movie_ids: [{$oid: 'MovieId2'}]}}
             ])
+        });
+
+        it('activates clustering', function () {
+            manager.markers.push(
+                {data: {movie_ids: [{$oid: 'MovieId1'}]}}
+            );
+            manager.clusterType = null;
+
+            $rootScope.$emit('FILTER_REMOVED');
+
+            expect(manager.clusterType).toEqual('cluster');
         });
     });
 });

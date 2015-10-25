@@ -3,7 +3,8 @@ angular.module('sfuber-movies').directive('moviesMap', function () {
         restrict: 'E',
         template: [
             '<ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom">',
-            '  <ui-gmap-markers click="vm.activateMarker" models="vm.markerManager.markers" coords="\'self\'" options="\'self\'">',
+            '  <ui-gmap-markers click="vm.activateMarker" models="vm.markerManager.markers" coords="\'self\'"',
+            '                   options="\'self\'" type="vm.markerManager.clusterType" typeOptions="vm.markerManager.clusterOptions">',
             '  </ui-gmap-markers>',
             '  <ui-gmap-window coords="vm.markerManager.activeMarker" show="vm.markerManager.activeMarker != null"',
             '                  closeClick="vm.markerManager.deactivateMarker" options="vm.activeMarkerWindowOptions"',
