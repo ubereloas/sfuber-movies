@@ -1,10 +1,11 @@
-angular.module('sfuber-movies').service('markerManager', function ($rootScope) {
+angular.module('sfuber-movies').service('markerManager', function ($rootScope, clusterCalculator) {
     var self = this;
     this.markers = [];
     this.activeMarker = null;
     this.clusterType = 'cluster';
     this.clusterOptions = {
-        minimumClusterSize: 3
+        minimumClusterSize: 3,
+        calculator: clusterCalculator
     };
 
     this.activateMarker = function (marker) {

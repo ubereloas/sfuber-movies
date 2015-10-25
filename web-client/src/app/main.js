@@ -3,6 +3,7 @@ require('angular-google-maps');
 require('angucomplete-alt');
 require('./app');
 require('./map/marker/markerFactory');
+require('./map/marker/clusterCalculator');
 require('./map/marker/markerManager');
 require('./map/moviesMapDirective');
 require('./map/locationDetailsDirective');
