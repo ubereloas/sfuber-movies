@@ -124,3 +124,6 @@ The following areas are good candidates for improvement that were downprioritize
 * __Error handling__: currently there is no error handling present in the client. If a connection error occurs, for example, nothing
  happens when clicking the locations or searching for movies. A proper way to handle this would be to implement retrying logic and
  show an error message if failed to alert the user.
+* __Window rendering on client__: the content in the location popup windows is rendered before it is ready and therefore text will seem
+ to "pop out" and then quickly resize itself when clicking on a location marker. A fix for this should be investigated more thoroughly 
+ and implemented.
