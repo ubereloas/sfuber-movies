@@ -13,6 +13,12 @@ clicking on them which will bring up a details window containing information abo
 [app-screenshot]: resources/app-screenshot.png
 [uberchallange]: https://github.com/uber/coding-challenge-tools
 
+## Demo app
+The demo application is hosted at Heroku on two different apps; one for serving the static assets (client) and another for the backend (service):
+
+* Client: http://sfubermovies-client.herokuapp.com
+* Service: http://sfubermovies.herokuapp.com
+
 ## Architecture and design choices
 The application is implemented as a classic client-server architecture with a SPA client written in AngularJS and a
 backend (service) written in Python. I have chosen the full-stack track.
@@ -116,3 +122,6 @@ but as an application grows it can be warranted especially in the non-happy path
  sent to the client, and in particular only the ones not currently being clustered on the map. Upon zomming the client would ask for
  newly visible and un-clustered locations. Essentially this would be clustering done on the server. While more performant this solution
  is much more complex than the one implemented here.
+ * __Error handling__: currently there is no error handling present in the client. If a connection error occurs, for example, nothing
+ happens when clicking the locations or searching for movies. A proper way to handle this would be to implement retrying logic and
+ show an error message if failed to alert the user.

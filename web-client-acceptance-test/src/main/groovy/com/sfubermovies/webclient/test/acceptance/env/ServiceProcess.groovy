@@ -5,7 +5,7 @@ class ServiceProcess {
 
     void start() {
         def rootDir = System.getenv('SFUBERMOVIES_ROOT_DIR')
-        process = Runtime.runtime.exec("python service.py --db sfubermovies-test", null, new File("$rootDir/service/app/api"))
+        process = Runtime.runtime.exec("python service.py", ['DB_NAME=sfubermovies-test'] as String[], new File("$rootDir/service/app/api"))
     }
 
     void stop() {

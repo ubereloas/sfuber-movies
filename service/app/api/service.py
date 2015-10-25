@@ -1,13 +1,11 @@
-import argparse
+import os
 from bson import json_util, ObjectId
 from flask import Flask, Response, request
 from flask.ext.cors import CORS
 from pymongo import MongoClient
 
-arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument('--db', required=True, dest='db_name')
-args = arg_parser.parse_args()
-db_name = args.db_name
+db_name = os.environ.get('DB_NAME') or 'sfubermovies'
+db_url = os.environ.get('DB_URL') or 'mongodb://localhost:27017/'
 
 app = Flask(__name__)
 CORS(app)
@@ -15,7 +13,7 @@ CORS(app)
 
 @app.route('/movie-locations')
 def movie_locations():
-    db = MongoClient()[db_name]
+    db = MongoClient(db_url)[db_name]
     locations = db.locations.find({}, {'coordinates': True, 'movie_ids': True})
     return Response(
         json_util.dumps({
@@ -27,7 +25,7 @@ def movie_locations():
 
 @app.route('/movie-locations/<id>/details')
 def movie_location_details(id):
-    db = MongoClient()[db_name]
+    db = MongoClient(db_url)[db_name]
     location_details = db.locations.find_one({'_id': ObjectId(id)}, {'coordinates': False})
     movies = db.movies.aggregate([
         {'$match': {'_id': {'$in': location_details['movie_ids']}}},
@@ -48,7 +46,7 @@ def movie_location_details(id):
 def movies():
     title_filter = request.args.get('titleFilter')
 
-    db = MongoClient()[db_name]
+    db = MongoClient(db_url)[db_name]
     movies = db.movies.find(
         {'title': {'$regex': title_filter}},
         {'title': True, 'year': True}

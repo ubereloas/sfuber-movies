@@ -5,3 +5,4 @@ pymongo == 3.0.3
 pytest == 2.8.2
 pytest-pythonpath == 0.7
 googlemaps == 2.3
+gunicorn == 19.3.0
