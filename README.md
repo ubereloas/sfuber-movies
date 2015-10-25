@@ -60,8 +60,7 @@ The acceptance-test module contains the end-to-end tests for the web-client. The
 for mapping the user stories to executable specs, Geb (Groovy) for implementing the executable specs, 
 Selenium for driving the app from the executable specs, and finally Serenity BDD for generating living documentation.
 
-The report reflecting the state of the app at the time of deployment can be found here:
-A video of the acceptance-tests running can be found here:
+The report reflecting the state of the app at the time of deployment can be found here: http://sfubermovies-client.herokuapp.com/report.php
 
 ## Technologies and tools
 The following table summarizes the technologies and tools used in the project, their roles as well as my experience with them.
