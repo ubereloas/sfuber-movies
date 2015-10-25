@@ -110,18 +110,18 @@ Technology           | Role                    | Experience
 The following areas are good candidates for improvement that were downprioritized due to time constraints:
 
 * __Integration/end-to-end testing of service__: there are currently no integration tests for the service. Even though
-all functionality is covered by the acceptance-tests it is hard to tell where the problem is when they fail. Integration tests
-that hit the service API directly (without the UI) would provide better defect localization. Furthermore, if the service is
-to be used by other clients (mobile, other services etc) testing it in isolation is much more important since there will 
-most likely be functionality not covered by the web-client and therefore its acceptance-tests.
+ all functionality is covered by the acceptance-tests it is hard to tell where the problem is when they fail. Integration tests
+ that hit the service API directly (without the UI) would provide better defect localization. Furthermore, if the service is
+ to be used by other clients (mobile, other services etc) testing it in isolation is much more important since there will 
+ most likely be functionality not covered by the web-client and therefore its acceptance-tests.
 * __Unit-testing Angular directives__: the client is covered only by unit tests of services. Since the acceptance-tests cover the UI
-the directives have not been tested in isolation. Testing directives in Angular is generally not as easy or clean as testing services
-but as an application grows it can be warranted especially in the non-happy path cases that typically do not have corresponding acceptance-tests.
+ the directives have not been tested in isolation. Testing directives in Angular is generally not as easy or clean as testing services
+ but as an application grows it can be warranted especially in the non-happy path cases that typically do not have corresponding acceptance-tests.
 * __Scalability__: the client currently asks for all location points on the map in a single request. Of course this approach does not
  scale to thousands of locations. A large user base could warrant a different approach in which only the visible location points are
  sent to the client, and in particular only the ones not currently being clustered on the map. Upon zomming the client would ask for
  newly visible and un-clustered locations. Essentially this would be clustering done on the server. While more performant this solution
  is much more complex than the one implemented here.
- * __Error handling__: currently there is no error handling present in the client. If a connection error occurs, for example, nothing
+* __Error handling__: currently there is no error handling present in the client. If a connection error occurs, for example, nothing
  happens when clicking the locations or searching for movies. A proper way to handle this would be to implement retrying logic and
  show an error message if failed to alert the user.
